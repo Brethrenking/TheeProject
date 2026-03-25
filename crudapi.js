@@ -7,13 +7,21 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 let todos = [
-  {id: 1, task: ' title', completed: completed},
-  {id: 1, task: 'description', completed: completed},
-  {id: 1, task: 'status', completed: pending},
+  { id: 1, task: 'title', completed: false },
+  { id: 2, task: 'description', completed: true },
+  { id: 3, task: 'status', completed: false },
 ];
+
+
 
 app.get('/todos',  (req, res) => {
   res.status(200).json(todos);
+});
+
+// ✅ ACTIVE FIRST added by Patrick
+app.get('/todos/active', (req, res) => {
+  const active = todos.filter(t => !t.completed);
+  res.json(active);
 });
 
 app.post('/todos',  (req, res) => {
@@ -22,10 +30,12 @@ app.post('/todos',  (req, res) => {
   res.status(201).json(newTodo);
 });
 
+
+
 app.patch('/todos/:id', (req, res) => {
   const todo = todos.find((t) => t.id === parseInt(req.params.id));
   if (!todo) return res.status(404).json({message: 'Todo not found' });
-  Object.assign(todo, res.body);
+  Object.assign(todo, req.body);
   res.status(200).json(todo);
 });
 
@@ -39,7 +49,7 @@ app.delete('/todos/:id', (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(500).json({message: 'Server error' });
+  res.status(404).json({ message: 'Route not found' });
 });
 
 app.listen(PORT, () => {
