@@ -12,7 +12,7 @@ const {
   createTask,
   updateTask,
   deleteTask
-} = require('../controllers/taskController');
+} = require('../controllers/taskController.js');
 
 //  ROUTES 
 

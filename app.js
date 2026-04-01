@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const taskRoutes = require('./routes/routes');
+const taskRoutes = require('./routes/routes.js');
 
 // Middleware to parse JSON bodies
 app.use(express.json());
